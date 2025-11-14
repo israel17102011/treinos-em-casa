@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Treinos em Casa — Saúde e Shape</title>
+  <meta name="description" content="Treinos em casa: flexão, agachamento, pó de chinelo e HIIT. Assinatura única vitalícia R$13,90.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--accent:#16a34a;--bg:#0d0f0f;--card:#111312;--muted:#9ca3af}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;background:linear-gradient(135deg,#ffefea,#ffe3e3);color:#111}
+    .container{max-width:1100px;margin:0 auto;padding:28px}
+    header{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo-img{height:56px;}
+    nav a{color:#444;text-decoration:none;margin-left:18px}
+    .hero{display:grid;grid-template-columns:1fr 380px;gap:32px;align-items:center;padding:32px 0}
+    .btn{display:inline-block;padding:12px 18px;border-radius:10px;background:#ff3b30;color:#fff;text-decoration:none;font-weight:600}
+    .card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 8px 25px rgba(0,0,0,0.08)}
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+    .feature{padding:18px;border-radius:10px;background:linear-gradient(180deg, #fff, #fff)}
+    .levels{display:flex;gap:8px;margin-top:12px}
+    .level-btn{padding:10px 14px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);cursor:pointer;background:transparent;color:#555}
+    .level-btn.active{background:#ffebe8;color:#ff3b30;border-color:#ff3b30}
+    .video-placeholder{width:100%;height:180px;border-radius:8px;background:#f2f2f2;display:flex;align-items:center;justify-content:center;color:#888;margin-top:12px}
+    @media (max-width:900px){.hero{grid-template-columns:1fr;}.features{grid-template-columns:1fr 1fr}}
+    .form-group{margin-bottom:14px}
+    .form-group label{display:block;font-weight:500;margin-bottom:5px}
+    .form-group input{width:100%;padding:10px;border-radius:8px;border:1px solid #CCC}
+    .error-msg{color:#ff3b30;font-size:14px;margin-top:6px}
+    .success-msg{color:#16a34a;font-size:15px;font-weight:600;margin:12px 0}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <img src="logo.svg" alt="Logo Treinos em Casa" class="logo-img">
+        <div>
+          <div style="font-weight:700">Treinos em Casa</div>
+          <div style="font-size:12px;color:#666">Saúde, força e shape — treine onde quiser</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#workouts">Treinos</a>
+        <a href="#precos">Assinatura</a>
+        <a href="#contato">Pagamento</a>
+      </nav>
+    </header>
+    <main>
+      <!-- ÁREA DE CADASTRO -->
+      <section id="cadastro" style="margin-top:30px">
+        <h2>Crie sua Conta</h2>
+        <div class="card" style="max-width:380px;margin-top:14px;">
+          <form id="form-cadastro" autocomplete="off">
+            <div class="form-group">
+              <label for="nome">Nome</label>
+              <input type="text" id="nome" name="nome" required autocomplete="off">
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <input type="email" id="email" name="email" required autocomplete="off">
+            </div>
+            <div class="form-group">
+              <label for="senha">Senha</label>
+              <input type="password" id="senha" name="senha" required minlength="5" autocomplete="off">
+            </div>
+            <button class="btn" type="submit" style="width:100%;">Criar Conta</button>
+            <div id="msg-cadastro"></div>
+          </form>
+        </div>
+      </section>
+      <section id="workouts" style="margin-top:20px">
+        <h2>Treinos & Níveis</h2>
+        <p style="color:#666">Escolha seu nível — o conteúdo completo só aparece depois do pagamento.</p>
+        <div class="levels">
+          <button class="level-btn" data-level="iniciante" onclick="selectLevel('iniciante', this)">Iniciante</button>
+          <button class="level-btn" data-level="intermediario" onclick="selectLevel('intermediario', this)">Intermediário</button>
+          <button class="level-btn" data-level="avancado" onclick="selectLevel('avancado', this)">Avançado</button>
+        </div>
+        <div id="workout-card" class="card" style="margin-top:14px;display:none">
+          <h3 id="workout-title">Treino</h3>
+          <div class="workout-list" id="workout-list"></div>
+          <div style="margin-top:12px">
+            <h4>Vídeo demonstrativo</h4>
+            <div id="video-area" class="video-placeholder">Vídeo / GIF do exercício (substituir por arquivo real)</div>
+          </div>
+          <div style="margin-top:12px">
+            <h4>Cronograma Semanal</h4>
+            <div id="schedule" style="color:#666; margin-top:8px"></div>
+          </div>
+        </div>
+      </section>
+      <section id="precos">
+        <h2 style="margin-top:10px">Assinatura</h2>
+        <div style="margin-top:12px" class="card">
+          <h3>Acesso Total</h3>
+          <p style="font-size:22px;margin:6px 0">Assinatura única: R$ 13,90</p>
+          <p style="color:#666">Pague uma vez e tenha acesso vitalício aos treinos.</p>
+          <a class="btn" href="#contato">Pagar via PIX</a>
+        </div>
+      </section>
+      <!-- Área de pagamento só aparece após cadastro -->
+      <section id="pagamento-area" style="display:none;">
+        <section id="contato" class="contact" style="margin-top:20px">
+          <h2>Pagamento — PIX</h2>
+          <div class="card" style="margin-top:12px;text-align:center">
+            <p style="color:#666">Escaneie o QR Code ou use a chave abaixo para pagar R$13,90.</p>
+            <img src="qr_pix_13.90.png" alt="QR PIX" style="width:220px;height:220px;border-radius:12px;margin:18px auto;display:block">
+            <p style="color:#666;font-size:14px">Código PIX Copia e Cola:</p>
+            <code style="display:block;margin-top:6px;color:#ff3b30;font-size:14px;word-break:break-all">00020101021226330014BR.GOV.BCB.PIX011191985921904520400005303986540513.905802BR5922ISRAEL EMANUEL FARIA D6005BELEM62190515TREINOS EM CASA63044972</code>
+            <button id="paid-btn" onclick="onPaidClick()" style="padding:12px 20px; background:#ff3b30; color:#fff; border:none; border-radius:8px; font-size:18px; cursor:pointer; margin-top:20px;">Já paguei, liberar aulas</button>
+            <p style="margin-top:8px;color:#666;font-size:13px">Após confirmar, o conteúdo será liberado nesta mesma página.</p>
+          </div>
+        </section>
+      </section>
+      <section id="aulas" style="display:none; margin-top:30px">
+        <h2>📘 Suas Aulas</h2>
+        <div class="card" style="margin-top:16px; line-height:1.7;">
+          <div id="aulas-content"></div>
+          <p style="margin-top:16px; color:#666;">Siga diariamente. Volte todos os dias para novos treinos e progressões.</p>
+        </div>
+      </section>
+      <section id="progresso" style="margin-top:40px">
+        <h2>📅 Progresso Diário</h2>
+        <p style="color:#666">Complete as aulas do dia e marque como feitas para liberar as próximas.</p>
+        <div id="lista-aulas" class="card" style="margin-top:16px; line-height:1.8"></div>
+      </section>
+    </main>
+    <footer style="padding:24px 0;text-align:center;color:#666">© Treinos em Casa — Criado com a ajuda do ChatGPT</footer>
+  </div>
+  <script>
+    // --- JS de Cadastro ---
+    function emailValido(email) {
+      return /\S+@\S+\.\S+/.test(email);
+    }
+    document.getElementById('form-cadastro').addEventListener('submit', function(e){
+      e.preventDefault();
+      const nome = document.getElementById('nome').value.trim();
+      const email = document.getElementById('email').value.trim().toLowerCase();
+      const senha = document.getElementById('senha').value;
+      const msgDiv = document.getElementById('msg-cadastro');
+      msgDiv.innerHTML = "";
+      if (!nome || !email || !senha) {
+        msgDiv.innerHTML = '<div class="error-msg">Preencha todos os campos.</div>';
+        return;
+      }
+      if (!emailValido(email)) {
+        msgDiv.innerHTML = '<div class="error-msg">E-mail inválido.</div>';
+        return;
+      }
+      if (senha.length < 5) {
+        msgDiv.innerHTML = '<div class="error-msg">A senha deve ter pelo menos 5 caracteres.</div>';
+        return;
+      }
+      // Verifica se email já existe (localStorage)
+      let usuarios = JSON.parse(localStorage.getItem('usuarios') || "[]");
+      if (usuarios.find(u => u.email === email)) {
+        msgDiv.innerHTML = '<div class="error-msg">Este e-mail já está cadastrado.</div>';
+        return;
+      }
+      // Salva usuário
+      usuarios.push({nome, email, senha});
+      localStorage.setItem('usuarios', JSON.stringify(usuarios));
+      localStorage.setItem('usuarioLogado', email);
+      msgDiv.innerHTML = '<div class="success-msg">Conta criada! Agora você pode realizar o pagamento.</div>';
+      setTimeout(()=>{
+        document.getElementById('cadastro').style.display = 'none';
+        document.getElementById('pagamento-area').style.display = 'block';
+        window.location.hash = '#pagamento-area';
+      }, 1100);
+    });
+    // Usuário desenvolvedor/teste sempre existe
+    (function(){
+      let usuarios = JSON.parse(localStorage.getItem('usuarios') || "[]");
+      if (!usuarios.find(u => u.email === "dev@treinos.com")) {
+        usuarios.push({nome: "Desenvolvedor", email: "dev@treinos.com", senha: "dev12345"});
+        localStorage.setItem('usuarios', JSON.stringify(usuarios));
+      }
+    })();
+    // Se usuário já está logado, mostra pagamento direto
+    if(localStorage.getItem('usuarioLogado')) {
+      document.getElementById('cadastro').style.display = 'none';
+      document.getElementById('pagamento-area').style.display = 'block';
+    }
+    // --- JS dos treinos ---
+    const WORKOUTS = {
+      iniciante: {
+        title: 'Iniciante — Circuito básico',
+        list: [
+          '10 flexões (apoio nos joelhos se precisar)',
+          '20 agachamentos',
+          '15 abdominais',
+          '30s prancha',
+          '10 pó de chinelo (ou burpees leves)'
+        ],
+        schedule: 'Segunda / Quarta / Sexta — Circuito 3x. Terça / Quinta — mobilidade leve.'
+      },
+      intermediario: {
+        title: 'Intermediário — Força e resistência',
+        list: [
+          '20 flexões',
+          '30 agachamentos (com pausa de 2s no final)',
+          '25 abdominais',
+          '45s prancha',
+          '15 pó de chinelo / burpees'
+        ],
+        schedule: 'Segunda / Terça / Quinta / Sexta — Alternar força e HIIT. Sábado — cardio leve.'
+      },
+      avancado: {
+        title: 'Avançado — Intensidade máxima',
+        list: [
+          '30 flexões (variações)',
+          '50 agachamentos',
+          '40 abdominais',
+          '1m30s prancha',
+          '20 burpees intensos'
+        ],
+        schedule: 'Treino 5x por semana com variações e progressões. Domingo descanso ativo.'
+      }
+    };
+    let selectedLevel = 'iniciante';
+    function selectLevel(level, el){
+      selectedLevel = level;
+      document.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active'));
+      if(el) el.classList.add('active');
+      const data = WORKOUTS[level];
+      document.getElementById('workout-title').textContent = data.title;
+      const listEl = document.getElementById('workout-list');
+      listEl.innerHTML = '<ol>' + data.list.map(i=>`<li>${i}</li>`).join('') + '</ol>';
+      document.getElementById('schedule').textContent = data.schedule;
+      document.getElementById('workout-card').style.display = 'block';
+      if (document.getElementById('aulas').style.display === 'block'){
+        populateAulas();
+      }
+    }
+    function onPaidClick(){
+      alert('Se você já pagou via PIX, confirme o pagamento no app do recebedor. Clique OK para liberar as aulas nesta sessão.');
+      liberarAulas();
+    }
+    function liberarAulas(){
+      document.getElementById('aulas').style.display = 'block';
+      populateAulas();
+      location.hash = '#aulas';
+    }
+    function populateAulas(){
+      const data = WORKOUTS[selectedLevel] || WORKOUTS['iniciante'];
+      const container = document.getElementById('aulas-content');
+      container.innerHTML = `
+        <h3>${data.title}</h3>
+        <ul>
+          ${data.list.map(it=>`<li>${it}</li>`).join('')}
+        </ul>
+        <p style="margin-top:10px;color:#666"><strong>Cronograma:</strong> ${data.schedule}</p>
+        <div style="margin-top:14px">
+          <h4>Vídeos demonstrativos</h4>
+          <div class="video-placeholder">(Coloque aqui os vídeos/GIFs demonstrativos dos exercícios)</div>
+        </div>
+      `;
+    }
+    // Daily lessons and progress
+    const AULAS_DIARIAS = Array.from({length:30}, (_,i)=>({
+      id: i,
+      title: `Aula ${i+1}`,
+      text: `Treino completo do dia ${i+1}`
+    }));
+    function renderAulasDiarias(){
+      const container = document.getElementById('lista-aulas');
+      const progresso = JSON.parse(localStorage.getItem('progressoAulas') || '[]');
+      let html = '<ul style="list-style:none;padding:0;margin:0">';
+      AULAS_DIARIAS.forEach((aula, index)=>{
+        const feita = progresso.includes(index);
+        const bloqueada = index > progresso.length;
+        html += `
+          <li style="margin:8px 0; opacity:${bloqueada?0.5:1}; display:flex; align-items:center; gap:10px">
+            <input type="checkbox" ${feita?'checked':''} ${bloqueada?'disabled':''} onclick="marcarAula(${index})">
+            <div>
+              <strong>${aula.title}</strong><br>
+              <small style="color:#666">${aula.text}</small>
+            </div>
+          </li>
+        `;
+      });
+      html += '</ul>';
+      container.innerHTML = html;
+    }
+    function marcarAula(i){
+      const progresso = JSON.parse(localStorage.getItem('progressoAulas') || '[]');
+      if(!progresso.includes(i)) progresso.push(i);
+      localStorage.setItem('progressoAulas', JSON.stringify(progresso));
+      renderAulasDiarias();
+      if (progresso.length) {
+        if (document.getElementById('aulas').style.display === 'block') populateAulas();
+      }
+    }
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const firstBtn = document.querySelector('.level-btn');
+      if(firstBtn) firstBtn.click();
+      renderAulasDiarias();
+    });
+  </script>
+</body>
+</html>
